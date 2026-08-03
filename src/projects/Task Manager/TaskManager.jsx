@@ -1,5 +1,6 @@
-import { useState } from "react";
-import "./TaskManager.css"
+import { useEffect, useState } from "react";
+import "./TaskManager.css";
+import { createTask, getTasks, updateTask, deleteTask, toggleTask } from "../../api/taskApi.js";
 
 export default function TaskManager() {
 
@@ -8,64 +9,73 @@ export default function TaskManager() {
     const [tasks, setTasks] = useState([]);
     const [searchTask, setSearchTask] = useState("");
     const [editTaskId, setEditTaskId] = useState(null);
-    const [filterStatus, setFilterStatus] = useState("All");
+    const [filterStatus, setFilterStatus] = useState("all");
+
+    async function fetchTasks() {
+        try {
+            const data = await getTasks();
+            setTasks(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchTasks();
+    }, []);
 
     // Add a new task or update an existing task
-    function handleAddTask() {
+    async function handleAddTask() {
         // Prevent adding an empty task
         if (task.trim() === "") return;
-
-        // Update existing task
-        if (editTaskId !== null) {
-            setTasks(prevTask => prevTask.map((currentTask) => {
-                if (currentTask.id === editTaskId) {
-                    return {
-                        ...currentTask,
-                        title: task,
-                        priority: priority,
-                    };
-                }
-                return currentTask;
-            }));
-             // Exit edit mode
-            setEditTaskId(null);
+        try {
+            if (editTaskId !== null) {
+                await updateTask(editTaskId, {
+                    title: task,
+                    priority,
+                });
+                setEditTaskId(null);
+            }
+            else {
+                await createTask({
+                    title: task,
+                    priority,
+                });
+            }
+            await fetchTasks();
+            setTask("");
+            setPriority("Medium");
+        } catch (error) {
+            console.error("Failed to save task:", error);
         }
-        // Create a new task
-        else {
-            const newTask = {
-                id: Date.now(),
-                title: task,
-                priority: priority,
-                completed: false
-            };
-            setTasks(prevTask => [...prevTask, newTask]);
-        }
-        //Reset form
-        setTask("");
-        setPriority("Medium");
     }
 
     // Delete a task
-    function handleDeleteTask(id) {
-        setTasks(prevTask => prevTask.filter((currentTask) => currentTask !== id));
+    async function handleDeleteTask(id) {
+        try {
+            await deleteTask(id);
+            await fetchTasks();
+        } catch (error) {
+            console.error("Failed to delete task:", error);
+        }
     }
 
     // Mark task as completed or incomplete
-    function handleToggleComplete(id) {
-        setTasks(prevTask => prevTask.map((currentTask) => {
-            if (currentTask.id === id) {
-                return {
-                    ...currentTask,
-                    completed: !currentTask.completed
-                };
-            }
-            return currentTask;
-        }));
+    async function handleToggleComplete(currentTask) {
+        try {
+            await toggleTask({
+                ...currentTask,
+                completed: !currentTask.completed,
+            });
+            await fetchTasks();
+        } catch (error) {
+            console.error("Failed to update task:", error);
+        }
     }
 
     // Load selected task into input for editing
     function handleEditTask(id) {
-        const taskToEdit = tasks.find(currentTask => currentTask.id === id);
+        const taskToEdit = tasks.find(currentTask => currentTask._id === id);
         setTask(taskToEdit.title);
         setPriority(taskToEdit.priority);
         setEditTaskId(id);
@@ -77,17 +87,14 @@ export default function TaskManager() {
             .toLowerCase()
             .includes(searchTask.toLowerCase());
 
-        if (filterStatus === "Active") {
+        if (filterStatus === "active") {
             return !currentTask.completed && matchesSearch
         }
-        if (filterStatus === "Completed") {
+        if (filterStatus === "completed") {
             return currentTask.completed && matchesSearch
         }
-        else {
-            return matchesSearch;
-        }
+        return matchesSearch;
     });
-
 
     return (
         <div className="task-manager">
@@ -156,27 +163,27 @@ export default function TaskManager() {
 
             </div>
 
-             {/* Empty State */}
+            {/* Empty State */}
             {filteredTasks.length === 0 && (
                 <p className="empty-message">No tasks found</p>
             )}
 
-             {/* Task List */}
+            {/* Task List */}
             <ul className="task-list">
                 {filteredTasks.map((currentTask) => (
-                    <li key={currentTask.id}>
+                    <li key={currentTask._id}>
                         <input
                             type="checkbox"
                             aria-label="Mark task as completed"
                             checked={currentTask.completed}
-                            onChange={() => handleToggleComplete(currentTask.id)}
+                            onChange={() => handleToggleComplete(currentTask)}
                         />
                         <span className={currentTask.completed ? "task-title completed" : "task-title"}>{currentTask.title}</span>
                         <span className={`priority ${currentTask.priority.toLowerCase()}`}>{currentTask.priority}</span>
                         <div className="actions">
                             <button
-                                onClick={() => handleEditTask(currentTask.id)}>Edit</button>
-                            <button onClick={() => handleDeleteTask(currentTask.id)}>Delete</button>
+                                onClick={() => handleEditTask(currentTask._id)}>Edit</button>
+                            <button onClick={() => handleDeleteTask(currentTask._id)}>Delete</button>
                         </div>
                     </li>
                 ))}
@@ -184,5 +191,4 @@ export default function TaskManager() {
         </div>
 
     )
-
 }

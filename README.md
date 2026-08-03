@@ -1,16 +1,135 @@
-# React + Vite
+# Task Manager Full Stack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack Task Manager application built with the MERN stack. The project demonstrates complete CRUD functionality using React on the frontend and Express, Node.js, MongoDB, and Mongoose on the backend. The frontend communicates with the backend through REST API service layer using both Fetch and  Axios without changing the UI components.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* Create a new task
+* View all tasks
+* Update existing tasks
+* Delete tasks
+* Mark tasks as completed or incomplete
+* Search tasks
+* Filter tasks by:
 
-## React Compiler
+  * All
+  * Active
+  * Completed
+* Persistent data using MongoDB
+* RESTful API architecture
+* MVC backend structure
+* Modular frontend API service
+* Axios-based API communication
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+### Frontend
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* React
+* JavaScript (ES6+)
+* Axios
+* CSS
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+
+## Project Structure
+
+```text
+task-manager-fullstack
+│
+├── server
+│   ├── config
+│   ├── controllers
+│   ├── models
+│   ├── routes
+│   ├── .env
+│   └── index.js
+│
+├── src
+│   ├── api
+│   │   └── taskApi.js
+│   └── projects
+│       └── Task Manager
+│           ├── TaskManager.jsx
+│           └── TaskManager.css
+```
+
+## API Endpoints
+
+| Method | Endpoint     | Description     |
+| ------ | ------------ | --------------- |
+| GET    | `/tasks`     | Fetch all tasks |
+| POST   | `/tasks`     | Create a task   |
+| PUT    | `/tasks/:id` | Update a task   |
+| DELETE | `/tasks/:id` | Delete a task   |
+
+## Installation
+
+### Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+### Backend
+
+```bash
+cd server
+npm install
+npm run dev
+```
+
+### Frontend
+
+```bash
+cd ..
+npm install
+npm run dev
+```
+
+## Environment Variables
+
+Backend `.env`
+
+```env
+MONGO_URI=your_mongodb_connection_string
+PORT=5000
+```
+
+## What I Learned
+
+* React Hooks (`useState`, `useEffect`)
+* CRUD operations
+* REST API design
+* Express routing
+* MVC architecture
+* MongoDB with Mongoose
+* Async/await
+* Fetch API
+* Axios
+* Error handling
+* Git branching and version control
+* Refactoring code into reusable modules
+* Separating UI logic from API logic
+
+## Future Improvements
+
+* JWT Authentication
+* User accounts
+* Task due dates
+* Categories
+* Pagination
+* Drag-and-drop task ordering
+* Dark mode
+* React Query
+* Unit and integration testing
+* Deployment using Vercel and Render
+
+## Author
+
+Raj Patel

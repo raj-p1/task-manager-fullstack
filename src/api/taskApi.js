@@ -1,66 +1,32 @@
 const BASE_URL = "http://localhost:5000/tasks"
+import axios from "axios";
 
 //Fetch all tasks from the backend (GET)
 export async function getTasks() {
-     const response = await fetch(BASE_URL);
-       if(!response.ok){
-        throw new Error("Failed to fetch tasks");
-       }
-       return response.json();
+    const response = await axios.get(BASE_URL);
+    return response.data;
 }
 
 //Create a new task (POST)
 export async function createTask(task) {
-     const response = await fetch(BASE_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(task),
-     });
-        if(!response.ok){
-            throw new Error("Failed to create task");
-        }
-        return response.json();
+    const response = await axios.post(BASE_URL,task);
+    return response.data;
 }
 
 //Edit a task (Update, PUT)
 export async function updateTask(id, task) {
-    const response = await fetch(`${BASE_URL}/${id}`, {
-        method: "PUT",
-        headers: {
-             "Content-Type": "application/json"
-        },
-        body: JSON.stringify(task),
-    });
-    if(!response.ok){
-            throw new Error("Failed to update task");
-        }
-        return response.json();
+    const response = await axios.put(`${BASE_URL}/${id}`, task);
+    return response.data;
 }
 
 //Delete a task (DELETE)
 export async function deleteTask(id) {
-    const response = await fetch(`${BASE_URL}/${id}`, {
-        method: "DELETE",
-    });
-    if(!response.ok){
-            throw new Error("Failed to delete task");
-        }
-        return response.json();
+    const response = await axios.delete(`${BASE_URL}/${id}`);
+    return response.data;
 }
 
 //Toggle a completed status of a task (PUT)
 export async function toggleTask(task) {
-    const response = await fetch(`${BASE_URL}/${task._id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(task),
-    });
-    if(!response.ok){
-            throw new Error("Failed to toggle task");
-        }
-        return response.json();
+    const response = await axios.put(`${BASE_URL}/${task._id}`, task);
+    return response.data;
 }

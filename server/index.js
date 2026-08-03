@@ -10,6 +10,7 @@ connectDB();
 //Middleware between req.body and json request bodies
 app.use(express.json());
 
+//GET API
 app.get("/tasks", async (req, res) => {
   try {
     const tasks = await Task.find();
@@ -22,6 +23,7 @@ app.get("/tasks", async (req, res) => {
   }
 });
 
+//POST API
 app.post("/tasks", async (req, res) => {
   try {
     const task = await Task.create(req.body);
@@ -30,6 +32,44 @@ app.post("/tasks", async (req, res) => {
     console.log(error);
     res.status(500).json({
       message: "Failed to create task",
+    });
+  }
+});
+
+//PUT API(Edit)
+app.put("/tasks/:id", async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!task) {
+      return res.status(404).json({
+        message: "Task not found",
+      });
+    }
+    res.status(200).json(task);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Failed to edit task",
+    });
+  }
+});
+
+//DELETE API
+app.delete("/tasks/:id", async (req, res) => {
+  try {
+    const task = await Task.findByIdAndDelete(req.params.id);
+    if(!task){
+        return res.status(404).json({
+            message: "Task not found",
+        });
+    }
+    res.status(200).json(task);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Failed to delete task",
     });
   }
 });

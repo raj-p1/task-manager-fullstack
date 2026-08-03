@@ -1,16 +1,60 @@
-# React + Vite
+# Task Manager (React Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React Task Manager application demonstrating state management, CRUD operations using local state, search, filtering, editing, and responsive UI. This version does not include a backend or database.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* Create a new task
+* View all tasks
+* Update existing tasks
+* Delete tasks
+* Mark tasks as completed or incomplete
+* Search tasks
+* Filter tasks by:
 
-## React Compiler
+  * All
+  * Active
+  * Completed
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+
+* React
+* JavaScript (ES6+)
+* CSS
+
+
+## Project Structure
+
+```text
+task-manager-fullstack
+
+├── src
+│   └── projects
+│       └── Task Manager
+│           ├── TaskManager.jsx
+│           └── TaskManager.css
+```
+
+## Installation
+
+### Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+
+### Frontend
+
+```bash
+cd ..
+npm install
+npm run dev
+```
+
+## Author
+
+Raj Patel

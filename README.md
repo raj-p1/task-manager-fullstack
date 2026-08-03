@@ -1,6 +1,6 @@
 # Task Manager Full Stack
 
-A full-stack Task Manager application built with the MERN stack. The project demonstrates complete CRUD functionality using React on the frontend and Express, Node.js, MongoDB, and Mongoose on the backend. The frontend communicates with the backend through REST API service layer using both Fetch and  Axios without changing the UI components.
+A full-stack Task Manager application built with the MERN stack. The project demonstrates complete CRUD functionality using React on the frontend and Express, Node.js, MongoDB, and Mongoose on the backend. The frontend communicates with the backend through a dedicated API service layer using Axios. The project was originally implemented with the Fetch API and later refactored to Axios without changing the React components.
 
 ## Features
 

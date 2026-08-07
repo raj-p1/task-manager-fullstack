@@ -2,6 +2,10 @@
 
 A full-stack Task Manager application built with the MERN stack. The project demonstrates complete CRUD functionality using React on the frontend and Express, Node.js, MongoDB, and Mongoose on the backend. The frontend communicates with the backend through a dedicated API service layer using Axios. The project was originally implemented with the Fetch API and later refactored to Axios without changing the React components.
 
+Live Demo Link: 
+Versel: https://task-manager-fullstack-sage-seven.vercel.app/
+Render: https://task-manager-fullstack-5rmg.onrender.com/tasks
+
 ## Features
 
 * Create a new task
